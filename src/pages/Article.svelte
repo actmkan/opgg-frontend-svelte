@@ -1,20 +1,19 @@
 <script lang="ts">
   import TalkInfo from "../components/talk/TalkInfo.svelte";
   import Sidebar from "../components/talk/Sidebar.svelte";
-  import SubHeader from "../components/talk/SubHeader.svelte";
-  import ArticleList from "../components/talk/ArticleList.svelte";
   import {
-    article, articles,
     commentPagination,
-    comments,
-    commentSort,
+    comments, commentSort,
+    fetchArticle,
     fetchChannels,
-    fetchTalk, pagination,
+    fetchComments,
+    fetchTalk,
     setChannel
   } from "../store/talk";
+  import ArticleView from "../components/talk/ArticleView.svelte";
   import { DEFAULT_PAGINATION } from "../constants";
 
-  export let params = { talkId: null, channelId: null };
+  export let params = { talkId: null, channelId: null, articleId: null };
 
   //TODO:: 새로고침시 작동안함
   const queryString = window.location.search;
@@ -22,11 +21,14 @@
   const sort = urlParams.get('sort') || 'new';
 
   const init = async () => {
-    await articles.set([]);
-    await pagination.set(DEFAULT_PAGINATION);
+    await comments.set([]);
+    await commentPagination.set(DEFAULT_PAGINATION);
+    await commentSort.set('top');
     await fetchTalk(params.talkId);
     await fetchChannels(params.talkId)
-    await setChannel(params.talkId, params.channelId, sort)
+    await setChannel(params.talkId, params.channelId, sort, false)
+    await fetchArticle(params.talkId, params.channelId, params.articleId)
+    await fetchComments(params.talkId, params.channelId, params.articleId, 1)
   };
 
   init();
@@ -56,8 +58,7 @@
   <div class="talk-content">
     <Sidebar />
     <div class="content">
-      <SubHeader />
-      <ArticleList />
+      <ArticleView />
     </div>
   </div>
 </div>
