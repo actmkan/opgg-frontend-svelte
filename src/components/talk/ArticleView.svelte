@@ -2,6 +2,7 @@
     import { pop, push } from "svelte-spa-router";
     import { article, channel, onLike } from "../../store/talk";
     import { deleteArticle } from "../../api/talk";
+    import { userId } from "../../store/auth";
 
     const onDelete = () => {
         if (confirm("해당 글을 정말 삭제하시겠습니까?")) {
@@ -214,7 +215,7 @@
                     </div>
                 </div>
             </div>
-            {#if $article.same_writer}
+            {#if $article.user_id === $userId}
                 <div class="article-action">
                     <div class="article-action__item delete" on:click={onDelete}>삭제</div>
                     <div

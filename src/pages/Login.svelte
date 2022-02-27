@@ -1,7 +1,7 @@
 <script lang="ts">
     import { login } from "../api/auth";
     import { push } from "svelte-spa-router";
-    import { authToken, userNickname } from "../store/auth";
+    import { authToken, gradeId, userId, userNickname } from "../store/auth";
 
     let email: string = "admin@op.gg";
     let password: string = "password";
@@ -28,6 +28,8 @@
                 .then((r) => {
                     authToken.set(r.data.token);
                     userNickname.set(r.data.nickname);
+                    userId.set(r.data.id);
+                    gradeId.set(r.data.grade_id);
                     push("/");
                 })
                 .catch(() => {

@@ -3,6 +3,7 @@
     import { article, channel, channelRows, fetchArticle } from "../../store/talk";
     import { get } from "svelte/store";
     import { createArticle, updateArticle } from "../../api/talk";
+    import { hasPermission } from "../../utils";
 
     export let params = { talkId: null, channelId: null, articleId: null };
 
@@ -211,7 +212,7 @@
                     <select class="article-write__select" bind:value={channelId}>
                         <option value hidden>채널 선택</option>
                         {#each $channelRows as channel}
-                            {#if channel.permissions && channel.permissions["ARTICLE_CREATE"].has}
+                            {#if channel.permissions && hasPermission(channel.permissions["ARTICLE_CREATE"].grade_id)}
                                 <option value={channel.id}>{channel.display_name}</option>
                             {/if}
                         {/each}

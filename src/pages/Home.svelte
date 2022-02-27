@@ -74,7 +74,7 @@
         <ol>
             {#each talks as talk}
                 <li class="talk-item">
-                    <a use:link={`/talk/${talk.id}/all`}>
+                    <a href={`/talk/${talk.id}/all`} use:link>
                         <div
                             class="item-image"
                             style="background-image: {`url(${talk?.banner_image.url})`}" />

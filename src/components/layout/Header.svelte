@@ -1,6 +1,6 @@
 <script lang="ts">
     import { link } from "svelte-spa-router";
-    import { authToken, userNickname } from "../../store/auth";
+    import { authToken, gradeId, userId, userNickname } from "../../store/auth";
     import { logout } from "../../api/auth";
 
     let loading = false;
@@ -17,10 +17,14 @@
                 .then(() => {
                     authToken.set(null);
                     userNickname.set(null);
+                    userId.set(null);
+                    gradeId.set(null);
                 })
                 .catch(() => {
                     authToken.set(null);
                     userNickname.set(null);
+                    userId.set(null);
+                    gradeId.set(null);
                 })
                 .then(() => {
                     loading = false;

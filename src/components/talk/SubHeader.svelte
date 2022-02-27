@@ -1,6 +1,7 @@
 <script lang="ts">
     import { link, push } from "svelte-spa-router";
     import { channel, onSearch, searchText, searchType, setSort, sort } from "../../store/talk";
+    import { hasPermission } from "../../utils";
 </script>
 
 <style lang="scss">
@@ -133,7 +134,7 @@
                 <a href={`/talk/${$channel.talk_id}/${$channel.id}`} use:link
                     >{$channel.display_name || "전체"}</a>
             </div>
-            {#if $channel.permissions && $channel.permissions["ARTICLE_CREATE"].has}
+            {#if $channel.permissions && hasPermission($channel.permissions["ARTICLE_CREATE"].grade_id)}
                 <div
                     class="sub-header-button"
                     on:click={() => push(`/talk/${$channel.talk_id}/${$channel.id}/write`)}>
