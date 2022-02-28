@@ -26,8 +26,8 @@ export const searchText = writable("");
 export const commentPagination = writable<object>(DEFAULT_PAGINATION);
 export const commentSort = writable("top");
 
-export const fetchTalk = (talkId) => {
-    getTalk(talkId)
+export const fetchTalk = async (talkId) => {
+    await getTalk(talkId)
         .then((r) => {
             talk.set(r.data.data);
         })

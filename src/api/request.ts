@@ -3,13 +3,14 @@ import { push } from "svelte-spa-router";
 import { authToken } from "../store/auth";
 import { get } from "svelte/store";
 
-const production = false;
-const BASE_URL = production ? "https://api.opgg.ahn.mk" : "http://localhost";
+const production = true;
+const BASE_URL = production ? "https://api.opgg.ahn.mk" : "http://localhost:8000";
 
 const request = axios.create({
     baseURL: BASE_URL,
     headers: {
         "Content-Type": "application/json",
+        Accept: "*/*",
     },
 });
 
